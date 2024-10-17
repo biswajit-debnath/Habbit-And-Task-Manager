@@ -96,6 +96,8 @@ function DailyPlanner() {
 
   //--------------------------------------------------Main Starts-------------------------------------------------------------------
 
+  createTaskData(mainSheet, {totalTasks, startingRowNumber, taskListColumnName}, taskIdToDetail);
+
   //--------------------------------------------------Main Ends-------------------------------------------------------------------
 
 }
@@ -106,3 +108,24 @@ function DailyPlanner() {
 
 
 //Helper ends-------------------------------------------------
+
+
+
+//Helper functions for main-------------------------------------------------------------------------------------------------------------
+
+//Task detail data insertion ex: {taskId : {rowNumber: taskRowNumber in excel}} in taskIdToDetail variable
+const createTaskData = (mainSheet, otherData, taskIdToDetail) => {
+  for(let index = 0; index < otherData.totalTasks; index++) {
+      let currentRow = otherData.startingRowNumber + 1 + index;
+
+      let taskId = mainSheet.getRange(otherData.taskListColumnName.id + currentRow).getValue();
+
+      taskIdToDetail[taskId]= {
+        "rowNumber": currentRow,
+        "timeTaken": 0,
+        "completedPercentage":0
+      }
+  }
+}
+
+//Helper function ends-------------------------------------------------------------------------------------------------------------
